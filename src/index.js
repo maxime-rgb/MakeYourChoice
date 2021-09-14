@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './css/Form.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import PostForm from './components/PostForm';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    {/* <App /> */}
+    <PostForm />
   </React.StrictMode>,
   document.getElementById('root')
 );
