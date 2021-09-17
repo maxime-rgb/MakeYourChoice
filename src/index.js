@@ -1,15 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import './css/Form.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import App from './App';
+import Routers from './Routers';
 import PostForm from './components/PostForm';
+import Home from './components/Home';
+import Header from './components/Header';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App /> */}
-    <PostForm />
+  
+    <Routers />
+
+    
   </React.StrictMode>,
   document.getElementById('root')
 );

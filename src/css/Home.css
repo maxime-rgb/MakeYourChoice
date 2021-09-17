@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@600&display=swap');
+
+.btn-survey{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 10vh;
+    font-size: 3em;
+    font-family: 'Abhaya Libre', serif;
+}
+.nav-link{
+    font-size: 2em;
+}
+a{
+    font-size: 2em;
+    color: black;
+}
+a:hover{
+    font-size: 2em;
+    color: white;
+}
+.dropdown-toggle::after {
+
+    vertical-align: 0.100em;
+}
+.go{
+    text-decoration: none;
+    color: green;
+}
+.go:hover{
+    text-decoration: none;
+    color: rgba(0, 128, 0, 0.486);
+}
