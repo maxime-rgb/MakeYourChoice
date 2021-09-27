@@ -1,66 +1,108 @@
-import {Container, Nav, NavDropdown} from 'react-bootstrap';
-import Navbar  from 'react-bootstrap/Navbar';
+import '../css/SignUp.css';
+import Axios from 'axios';
+import { useState } from 'react';
 
 
 
+function SignUp(props){
 
-function Login(){
+const[userfirstNameReg, setUserFirstNameReg] = useState('');
+const[userlastNameReg, setUserLastNameReg] = useState('');
+const[mailReg, setMailReg] = useState('');
+const[passwordReg, setPasswordReg] = useState('');
+const[mailLog, setMailLog] = useState('');
+const[passwordLog, setPasswordLog] = useState('');
+
+    const register = () => {
+        console.log('response');
+        fetch('http://localhost:3000/register',{
+            method:'Post',
+            headers: {
+              'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                FirstName: userfirstNameReg, 
+                LastName: userlastNameReg, 
+                Mail: mailReg, 
+                Password: passwordReg, 
+            })
+          }).then((response)=>{
+            console.log(response);
+            return response.json()
+          }).then((data)=>{
+            sessionStorage.setItem('user', JSON.stringify(data));
+            props.setUser(sessionStorage.getItem('user'))
+          }) 
+    };
+    const login = () => {
+        console.log('response');
+        fetch('http://localhost:3000/login',{
+            method:'Post',
+            headers: {
+              'Content-Type' : 'application/json'
+            },
+             body: JSON.stringify({
+            Mail: mailLog, 
+            Password: passwordLog, 
+             })
+          }).then((response)=>{
+            console.log(response);
+            return response.json()
+          }).then((data)=>{
+            console.log(data);
+            sessionStorage.setItem('user', JSON.stringify(data));
+            props.setUser(sessionStorage.getItem('user'))
+            Redirection()
+        }) 
+    };
+    function Redirection(){
+      document.location.href="/";
+    }
+
 
     return(
-        <>
-            <Form>
-            <Row className="mb-3">
-                <Form.Group as={Col} controlId="formGridEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-                </Form.Group>
+        <div className="boxsignup">  
+            <div className="containForms">
+                <form className="FormSignUp" 
+                 onSubmit={(e)=>{
+                    e.preventDefault() 
+                    login()
+                    
+                    }}  method="POST">
+                    <h1 className="TitleSign">Login</h1>
+                    
+                    <label>Your Email</label>
+                    <input className="InputSignIn" type="email" placeholder="xxx@xxx.com" name="email" onChange={(e) => {setMailLog(e.target.value);}}required ></input>
 
-                <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-                </Form.Group>
-            </Row>
+                    <label>Your Password</label>
+                    <input className="InputSignIn" type="password" minlength="5"  onChange={(e) => {setPasswordLog(e.target.value);}}placeholder="*****" name="password" required></input>
 
-            <Form.Group className="mb-3" controlId="formGridAddress1">
-                <Form.Label>Address</Form.Label>
-                <Form.Control placeholder="1234 Main St" />
-            </Form.Group>
+                    <input className="InputSignIn" className="validate" type="submit"  value="Login" />
+                </form> 
 
-            <Form.Group className="mb-3" controlId="formGridAddress2">
-                <Form.Label>Address 2</Form.Label>
-                <Form.Control placeholder="Apartment, studio, or floor" />
-            </Form.Group>
+                <form className="FormSignUp" onSubmit={(e)=>{
+                    e.preventDefault() 
+                    register()
+                    }}  method="POST">
+                    <h1 className="TitleSignUp">Create an account </h1>
 
-            <Row className="mb-3">
-                <Form.Group as={Col} controlId="formGridCity">
-                <Form.Label>City</Form.Label>
-                <Form.Control />
-                </Form.Group>
+                    <label>Your Firstname</label>
+                    <input className="InputSignup" type="text" onChange={(e) => {setUserFirstNameReg(e.target.value);}} placeholder="Maxime" name="firstname" required></input>
 
-                <Form.Group as={Col} controlId="formGridState">
-                <Form.Label>State</Form.Label>
-                <Form.Select defaultValue="Choose...">
-                    <option>Choose...</option>
-                    <option>...</option>
-                </Form.Select>
-                </Form.Group>
+                    <label>Your Lastname</label>
+                    <input className="InputSignup" type="text" onChange={(e) => {setUserLastNameReg(e.target.value);}} placeholder="THOMAS" name="lastname" required></input>
+                    
+                    <label>Your Email</label>
+                    <input className="InputSignup" type="email" onChange={(e) => {setMailReg(e.target.value);}} placeholder="xxx@xxx.com" name="email" required ></input>
 
-                <Form.Group as={Col} controlId="formGridZip">
-                <Form.Label>Zip</Form.Label>
-                <Form.Control />
-                </Form.Group>
-            </Row>
+                    <label>Your Password</label>
+                    <input className="InputSignup" type="password" onChange={(e) => {setPasswordReg(e.target.value);}} minlength="5" placeholder="*****" name="password" required></input>
 
-            <Form.Group className="mb-3" id="formGridCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
-            </Form.Group>
-
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>
-            </Form>
-                </>
-    );
+                    <input className="InputSignup" className="validate" type="submit" value="Create" />
+                </form> 
+            </div>
+        </div>
+    )
 }
-
-export default Login;
+  export default SignUp;
+  

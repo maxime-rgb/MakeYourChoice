@@ -1,0 +1,31 @@
+.table{
+    width: 90% !important;
+    text-align: center;
+    justify-content: center;
+    margin: auto;
+    margin-top: 15%;
+}
+tbody{
+    vertical-align: middle !important;
+}
+
+.table-dark {
+    --bs-table-bg: #212529c4;
+    --bs-table-striped-bg: #2c3034c4;
+}
+.id{
+    width: 5%;
+}
+.date{
+    width: 10%
+}
+.name{
+    width: 15%;
+}
+.question{
+    width: 30%;
+}
+.logofolder{
+    width: 10%;
+
+}

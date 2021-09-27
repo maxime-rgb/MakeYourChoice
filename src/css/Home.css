@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     text-align: center;
+    align-items: center;
     margin-top: 10vh;
     font-size: 3em;
     font-family: 'Abhaya Libre', serif;
@@ -20,14 +21,20 @@ a:hover{
     color: white;
 }
 .dropdown-toggle::after {
-
     vertical-align: 0.100em;
 }
 .go{
     text-decoration: none;
-    color: green;
+    color: rgba(0, 0, 0, 0.699);
 }
 .go:hover{
     text-decoration: none;
-    color: rgba(0, 128, 0, 0.486);
+    
+    color: rgb(131, 131, 131);
+}
+
+@media screen and (max-width: 360px) {
+    .logo{
+        margin: 0;
+    }
 }

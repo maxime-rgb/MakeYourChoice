@@ -1,7 +1,5 @@
-import logo from './logo.svg';
-import './css/App.css';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
@@ -9,23 +7,26 @@ function App() {
   const [data, setData]= useState([])
   const [isLoading, setIsLoading]= useState(true)
   
-  let answer
 
     useEffect(()=>{
       if (isLoading) {
-        fetch('http://localhost:3000/',{
-          method:'GET',
-          // body: {}
+        fetch('http://localhost:3000/register',{
+          method:'Post',
+          headers: {
+            'Content-Type' : 'application/json'
+          },
+           body: JSON.stringify({a:1})
         }).then((response)=>{
           console.log(response);
           return response.json()
         }).then((data)=>{
-          setData(data)
-          setIsLoading(false)
-          console.log(data[0]);
+      
+          console.log(data);
         })  
       }
     })
+
+
     function callApi(){
       if (data.length > 0) {
         
@@ -47,7 +48,6 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" /> 
    
         {callApi()}
 

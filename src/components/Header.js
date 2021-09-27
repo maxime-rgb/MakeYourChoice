@@ -1,39 +1,65 @@
-import {Container, Nav, NavDropdown} from 'react-bootstrap';
+import {Container, Button, Nav, NavDropdown} from 'react-bootstrap';
 import Navbar  from 'react-bootstrap/Navbar'
 import '../css/Navbar.css';
 import { Link } from "react-router-dom";
 
 
-function Header(){
+function Header(props){
+console.log(props);
+  let user = JSON.parse(props.User)
+  console.log(user);
 
+  function Redirection(){
+    document.location.href="/";
+  }
+
+  function logout(){
+    sessionStorage.setItem('user', null)
+    props.setUser(sessionStorage.getItem('user'))
+    Redirection();
+  }
     return(
         <>
           <Navbar collapseOnSelect expand="lg">
-            <Container>
+            <Container >
             <Navbar.Brand href="#home"></Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className="me-auto">
-                <NavDropdown title="Surveys" id="collasible-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">My Surveys</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <Link to="/PostForm" style={{textDecoration:'none'}}>
-                PostForm
-              </Link>
-                </NavDropdown>
-              </Nav>
+            <Navbar.Collapse id="responsive-navbar-nav" className="container2">
+            
               <Nav>
-                <img className="logo" src="/images/logo-mys-white-removebg.png"/>
-              </Nav>
-              <Nav>
-              <Link className="navbarA" to="/" >
-                Home
+              <Link className="navbarHomeText " to="/" >
+               <img className="logo" src="/images/logo-mys-white-removebg.png"/>
               </Link>
+              </Nav>
+              
+                {(props.User != 'null') && (props.User != null) ? <div className="userConnected"><h2 className="userConnectedName">{user.FirstName}</h2><Button className="disconnect" onClick={()=>logout()}><img className="exitDoor" src="../images/exit-door.svg" /></Button>
+                </div> : '' }
 
-              </Nav>
+                {(props.User != 'null') && (props.User != null) ? 
+                
+                <Nav className="me-auto">
+                  <NavDropdown title="Options" id="collasible-nav-dropdown">
+                      <Link className="navbarA" to="/Profil" >
+                        My Profil
+                      </Link>
+                    <NavDropdown.Divider />
+                        <Link className="navbarA " to="/Surveys" style={{textDecoration:'none'}}>
+                          My Surveys
+                        </Link>
+                    <NavDropdown.Divider />
+                        <Link className="navbarA " to="/PostForm" style={{textDecoration:'none'}}>
+                          New Survey
+                        </Link>
+                  </NavDropdown>  
+              </Nav>: <Link className="Loginbtn" to="/SignUp" >
+                  Login </Link>  }
+
             </Navbar.Collapse>
+            
             </Container>
+            
           </Navbar>
+          
       </>
     );
 }
