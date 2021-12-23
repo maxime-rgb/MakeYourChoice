@@ -1,6 +1,6 @@
-import '../css/SignUp.css';
-import Axios from 'axios';
 import { useState } from 'react';
+import '../../css/SignUp.css';
+import { ENTRYPOINT } from '../../Entrypoint';
 
 
 
@@ -15,7 +15,7 @@ const[passwordLog, setPasswordLog] = useState('');
 
     const register = () => {
         console.log('response');
-        fetch('http://localhost:3000/register',{
+        fetch(ENTRYPOINT + '/users/register',{
             method:'Post',
             headers: {
               'Content-Type' : 'application/json'
@@ -36,7 +36,7 @@ const[passwordLog, setPasswordLog] = useState('');
     };
     const login = () => {
         console.log('response');
-        fetch('http://localhost:3000/login',{
+        fetch(ENTRYPOINT + '/users/login',{
             method:'Post',
             headers: {
               'Content-Type' : 'application/json'
@@ -75,7 +75,7 @@ const[passwordLog, setPasswordLog] = useState('');
                     <input className="InputSignIn" type="email" placeholder="xxx@xxx.com" name="email" onChange={(e) => {setMailLog(e.target.value);}}required ></input>
 
                     <label>Your Password</label>
-                    <input className="InputSignIn" type="password" minlength="5"  onChange={(e) => {setPasswordLog(e.target.value);}}placeholder="*****" name="password" required></input>
+                    <input className="InputSignIn" type="password" minlength="3"  onChange={(e) => {setPasswordLog(e.target.value);}}placeholder="*****" name="password" required></input>
 
                     <input className="InputSignIn" className="validate" type="submit"  value="Login" />
                 </form> 
@@ -96,7 +96,7 @@ const[passwordLog, setPasswordLog] = useState('');
                     <input className="InputSignup" type="email" onChange={(e) => {setMailReg(e.target.value);}} placeholder="xxx@xxx.com" name="email" required ></input>
 
                     <label>Your Password</label>
-                    <input className="InputSignup" type="password" onChange={(e) => {setPasswordReg(e.target.value);}} minlength="5" placeholder="*****" name="password" required></input>
+                    <input className="InputSignup" type="password" onChange={(e) => {setPasswordReg(e.target.value);}} minlength="3" placeholder="*****" name="password" required></input>
 
                     <input className="InputSignup" className="validate" type="submit" value="Create" />
                 </form> 

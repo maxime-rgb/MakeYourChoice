@@ -36,10 +36,7 @@ function App() {
             <div key={Surveys.Title}>
               <h1>{Surveys.Title}</h1>
               <h3>{Surveys.Question}</h3>
-              <p>
-              
-              </p>
-              </div>
+            </div>
           )
         })
       }

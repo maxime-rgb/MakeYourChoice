@@ -1,36 +1,24 @@
 import React from 'react';
-import Header from './Header';
 import { Link } from "react-router-dom";
 import "../css/Home.css";
-import App from '../App'
 
 
 
-function Home(){
 
+function Home(props){
+    console.log(props);
+    let user = JSON.parse(props.User)
 
-return(
-    <div>
-
-
-
+    return(
+        <div>
             <div className="container btn-survey">
                 <label>Need a survey ?</label>
-                <Link className="go" to="/PostForm">
-                 Go !
-                </Link>
-                
-                <img className="logo" src="/images/logo-mys-white-removebg.png"/>
-                
+                {(props.User != 'null') && (props.User != null) ? <Link className="go" to="/PostForm">
+                    Start ! </Link> : <Link className="go" to="/SignUp"> Sign In!</Link> } 
+                <img className="logo" src="\images\MYC_white.png"/>
             </div>
-            <div className="pictures">
-                <div className="picture"></div>
-                <div className="picture"></div>
-                <div className="picture"></div>
-            </div>
-
-    </div>
-    
-)
+        </div>
+        
+    )
 }
 export default Home;

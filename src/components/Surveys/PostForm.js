@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import '../css/Form.css';
-import Header from './Header';
+import '../../css/Form.css';
+import Header from '../Header';
 import {Form} from 'react-bootstrap';
 import { useParams } from "react-router-dom";
+import { ENTRYPOINT } from '../../Entrypoint';
 
 
 
@@ -10,20 +11,58 @@ import { useParams } from "react-router-dom";
 function PostForm(props){
 
 
-    
+
+const[title, setTitleName] = useState('');
+const[question, setQuestion] = useState('');
+const[date, setDate] = useState(new Date());  
+const[answer, setAnswer] = useState([]);
+let user = JSON.parse(props.User)
+
+
+    const newSurvey = () => {
+        const arrayInputs = document.querySelectorAll('#answer')
+        console.log(arrayInputs);
+        let inputValues = []
+        arrayInputs.forEach((input)=>{
+            if (input.value.length > 0) {
+                inputValues.push(input.value)
+            }
+        })
+        console.log(inputValues);
+        fetch( ENTRYPOINT + '/surveys/newSurvey/'+ user.id ,{
+            method:'Post',
+            headers: {
+              'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                Title: title, 
+                Question: question,    
+                Date: date, 
+                AllAnswer: JSON.stringify(inputValues), 
+            })
+          }).then((response)=>{
+            console.log(response);
+            return response.json()
+          }).then((data)=>{
+        
+            console.log(data);
+        }) 
+    };
+
+
     const [items, setitems] = useState([
         {
             content: 
             <>
                 <label>Answer</label>
-                <input type="text" onChange={(e) => {setAnswer(e.target.value);}} placeholder="Enter an answer" name="Answer" ></input>
+                <input id="answer" type="text" placeholder="Enter an answer" name="answer" ></input>
             </>
         },
         {
             content: 
             <>
                 <label>Answer</label>
-                <input type="text" onChange={(e) => {setAnswer(e.target.value);}} placeholder="Enter an answer" name="Answer" ></input>
+                <input id="answer" type="text" placeholder="Enter an answer" name="answer" ></input>
             </>
         }
     ])
@@ -34,55 +73,29 @@ function PostForm(props){
                     content: 
                     <>
                         <label>Answer</label>
-                        <input type="text" onChange={(e) => {setAnswer(e.target.value);}} placeholder="Enter an answer" name="Answer" ></input>
+                        <input id="answer" type="text" placeholder="Enter an answer" name="answer" ></input>
                     </>
                 }
             ])
         )
     }
-
     function remove_fields() {
         setitems( 
             items.slice(0,-1)
         )
     }
 
+
     function displayItems(){
         return items.map((item)=>{
             return item.content
         })
     }
-const { survey_id } = useParams();
-const[title, setTitleName] = useState('');
-const[question, setQuestion] = useState('');
-const[date, setDate] = useState(new Date());
-const[answer, setAnswer] = useState('');
-let user = JSON.parse(props.User)
+    function Redirection(){
+        alert("Votre sondage à bien été crée !")
 
-
-    const newSurvey = () => {
-        fetch('http://localhost:3000/newSurvey/'+ user.id ,{
-            method:'Post',
-            headers: {
-              'Content-Type' : 'application/json'
-            },
-            body: JSON.stringify({
-                Title: title, 
-                Question: question, 
-                Date: date, 
-                Answer: answer, 
-            })
-          }).then((response)=>{
-            console.log(response);
-            return response.json()
-          }).then((data)=>{
-            sessionStorage.setItem('user', JSON.stringify(data));
-            props.setUser(sessionStorage.getItem('user'))
-            console.log(data);
-        }) 
-    };
-
-
+        document.location.href="/Surveys";
+      }
     return(
         <>
         
@@ -92,13 +105,15 @@ let user = JSON.parse(props.User)
                 <form className="FormNewSurvey" onSubmit={(e)=>{
                     e.preventDefault() 
                     newSurvey()
+                    Redirection()
+                     
                    
                 }}  method="POST">
                             <label>Title of survey</label>
                             <input type="text" placeholder="Enter the title of the survey" onChange={(e) => {setTitleName(e.target.value);}} name="title" ></input>
 
                             <label>Question</label>
-                            <input type="text" placeholder="Enter your question" onChange={(e) => {setQuestion(e.target.value);}} name="Question" ></input>
+                            <input type="text" placeholder="Enter your question" onChange={(e) => {setQuestion(e.target.value);}} name="question" ></input>
 
                             <label>Date :</label>
                             <Form.Group controlId="duedate">
@@ -124,6 +139,5 @@ let user = JSON.parse(props.User)
         </div>
         </>
     ); 
-   
 }
 export default PostForm;

@@ -11,6 +11,7 @@
 }
 .nav-link{
     font-size: 2em;
+    
 }
 a{
     font-size: 2em;
@@ -24,12 +25,14 @@ a:hover{
     vertical-align: 0.100em;
 }
 .go{
-    text-decoration: none;
+    font-size: 1.5em;
+    margin-top: 5rem;
     color: rgba(0, 0, 0, 0.699);
+    text-decoration: underline;
 }
 .go:hover{
-    text-decoration: none;
-    
+    font-size: 1.5em;
+    margin-top: 5rem;
     color: rgb(131, 131, 131);
 }
 

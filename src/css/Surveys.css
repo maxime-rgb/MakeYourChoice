@@ -17,13 +17,14 @@ tbody{
     width: 5%;
 }
 .date{
-    width: 10%
+    width: 5%;
 }
-.name{
-    width: 15%;
-}
+
 .question{
-    width: 30%;
+    width: 40%;
+}
+.questionAccess{
+    width: 20%;
 }
 .logofolder{
     width: 10%;

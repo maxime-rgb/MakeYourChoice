@@ -1,6 +1,7 @@
 import React from 'react';
-import '../css/Profil.css';
 import { useState } from 'react';
+import '../../css/Profil.css';
+import { ENTRYPOINT } from '../../Entrypoint';
 
 
 function Profil (props){
@@ -15,7 +16,7 @@ function Profil (props){
 
     const UpdateForm = () => {
         
-        fetch('http://localhost:3000/Profil/' + user.id ,{
+        fetch(ENTRYPOINT + '/users/Profil/' + user.id ,{
             method:'PUT',
             headers: {
               'Content-Type' : 'application/json'

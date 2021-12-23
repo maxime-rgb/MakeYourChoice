@@ -28,7 +28,7 @@ console.log(props);
             
               <Nav>
               <Link className="navbarHomeText " to="/" >
-               <img className="logo" src="/images/logo-mys-white-removebg.png"/>
+               <img className="logo" src="\images\MYC_white.png"/>
               </Link>
               </Nav>
               

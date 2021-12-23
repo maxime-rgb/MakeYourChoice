@@ -1,19 +1,19 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
-import Profil from "./components/Profil";
+import Profil from "./components/Users/Profil";
 import Home from "./components/Home";
-import PostForm from "./components/PostForm";
+import PostForm from "./components/Surveys/PostForm";
 import Header from "./components/Header";
-import Surveys from "./components/Surveys";
-import SurveyDetails from "./components/SurveyDetails";
-import SignUp from "./components/SignUp";
+import Surveys from "./components/Surveys/Surveys";
+import SurveyDetails from "./components/Surveys/SurveyDetails";
+import SurveyDetailsForm from './components/Surveys/SurveyDetailsForm';
+import SignUp from "./components/Users/SignUp";
 import Footer from "./components/Footer";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/App.css';
 
 
@@ -41,15 +41,16 @@ export default function Routers() {
           <Route path="/Signup">
             <SignUp  User={User} setUser={setUser}/>
           </Route>
+          <Route exact path="/SurveyDetails/participate/:survey_id">
+            <SurveyDetailsForm User={User} setUser={setUser}/>
+          </Route>
 
           <Route path="/SurveyDetails/:survey_id">
             <SurveyDetails User={User} setUser={setUser}/>
           </Route>
 
-
           <Route path="/">
-            
-            <Home />
+            <Home User={User} setUser={setUser} />
           </Route>
 
         </Switch>
