@@ -94,7 +94,7 @@ export default function SurveyDetailsForm(props){
             },
             body: JSON.stringify({
                 surveyId: survey_id,
-                userId: User.id,
+                userId: User ? User.id : null,
                 answer : JSON.stringify(userChoice)
             })
         }).then((response)=>{

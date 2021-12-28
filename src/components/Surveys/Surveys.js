@@ -15,7 +15,7 @@ export default function Surveys(props){
     const [data, setData]= useState([]);
     const [isLoading, setIsLoading]= useState(true);
     let user = JSON.parse(props.User)
-    console.log(user);
+    // console.log(user);
 
     useEffect(()=>{
        
@@ -39,12 +39,29 @@ export default function Surveys(props){
     }
 
     })
-    const shareUrl = ENTRYPOINT + "/SurveyDetailsForm/1";
-  
+    const shareUrl = ENTRYPOINT + "/SurveyDetailsForm/"+ user.id;
+        function onDelete(survey_id){
+            fetch(ENTRYPOINT + '/surveys/delete/'+ survey_id ,{
+                method:'POST',
+                headers: {
+                    'Content-Type' : 'application/json'
+                }
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error('Error - 404 Not Found')
+                }else{
+                    return response.json()
+                }
+            }).then((data) => {
+                console.log(data)
+                setIsLoading(true)
+           
+            });
+        }
         function displayTable(){
             if (data.length>0) {
                     return data.map((Surveys)=>{
-                        console.log(Surveys);
+                        // console.log(Surveys);
                         return(
                          <tr>
                             <td className="id">{Surveys.Id}</td>
@@ -69,8 +86,9 @@ export default function Surveys(props){
                               <WhatsappIcon size={40} round={true} />
                             </WhatsappShareButton>
                             </td>
+                            <td><button className='btn' onClick={()=>{onDelete(Surveys.Id)}}>Delete</button></td>
                         </tr>
-                     )   
+                      )   
                     })
             }else{
                 return ''
@@ -86,7 +104,8 @@ export default function Surveys(props){
                     <th>DATE</th>
                     <th>TITLE</th>
                     <th>ACCESS</th>
-                    <th>Share</th> 
+                    <th>SHARE</th>
+                    <th>DELETE</th>  
                 </tr>
             </thead>
 

@@ -13,6 +13,7 @@ export default function SurveyDetails(props){
     const [data, setData]= useState([]);
     const [isLoading, setIsLoading]= useState(true);
     const { survey_id } = useParams();
+
     const shareUrl = ENTRYPOINT + "/SurveyDetails/participate/"+survey_id;
 
 
@@ -35,36 +36,38 @@ export default function SurveyDetails(props){
         if (data.length>0) {
             const answers = JSON.parse(data[0].answers)
             return answers.map((answer)=>{
-                return(
-                 
-                    <>
-                    <ListGroupItem key={answer} className="answers">{answer} <div>33%</div></ListGroupItem>
-                    <NavDropdown.Divider />
-                    </>
-                
-             )   
-            })
-}             
+                let count = 0
+                data.forEach((response)=>{
+                    if(JSON.parse(response.answer).includes(answer)){
+                        count++
+                    }
+                })
 
+                return( 
+                    <>
+                        <ListGroupItem key={answer} className="answers">{answer} <div>Votes : {count}  ={'>'}  {count/data.length *100}%</div></ListGroupItem>
+                        <NavDropdown.Divider />
+                    </>
+                )   
+            })
+}   
     }
   
         function displayListGroup(){
-
-            
+    
             if (data.length>0) {
-                  console.log(data[0].Date);
-                  const formatYmd = date => date.toISOString().slice(0, 10);
-
-                  // Example
-                  formatYmd(new Date()); 
+                    const date = Date.parse(data[0].Date);
+                    const dateObject = new Date(date)
+                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    console.log(dateObject.toLocaleDateString('fr-FR',options));
                     
                         return(  
                             <>  
                             <h1 className="h1Details">{data[0].Title}</h1>
-                            <p className="dateDetails">Created on {data[0].Date} </p>
+                            <p className="dateDetails">Created on {dateObject.toLocaleDateString('en-EN',options)} </p>
                             <h2 className="h2Details">{data[0].Question}</h2>
                             <ListGroup className="">
-                            {displayAnswers()}
+                                {displayAnswers()}
                             </ListGroup>
                             </>  
                         
