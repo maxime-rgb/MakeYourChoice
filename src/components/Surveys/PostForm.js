@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import '../../css/Form.css';
-import Header from '../Header';
 import {Form} from 'react-bootstrap';
-import { useParams } from "react-router-dom";
 import { ENTRYPOINT } from '../../Entrypoint';
 
 
@@ -15,7 +13,6 @@ function PostForm(props){
 const[title, setTitleName] = useState('');
 const[question, setQuestion] = useState('');
 const[date, setDate] = useState(new Date());  
-const[answer, setAnswer] = useState([]);
 let user = JSON.parse(props.User)
 
 

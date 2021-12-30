@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import Routers from './Routers';
+import './css/Navbar.css';
+
 
 ReactDOM.render(
   <React.StrictMode>

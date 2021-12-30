@@ -14,7 +14,7 @@ export default function SurveyDetails(props){
     const [isLoading, setIsLoading]= useState(true);
     const { survey_id } = useParams();
 
-    const shareUrl = ENTRYPOINT + "/SurveyDetails/participate/"+survey_id;
+    const shareUrl =  "http://localhost:3001/SurveyDetails/participate/"+survey_id;
 
 
     useEffect(()=>{
@@ -38,14 +38,17 @@ export default function SurveyDetails(props){
             return answers.map((answer)=>{
                 let count = 0
                 data.forEach((response)=>{
-                    if(JSON.parse(response.answer).includes(answer)){
-                        count++
+                    if (response.answer !== null){
+                        
+                        if(JSON.parse(response.answer).includes(answer)){
+                            count++
+                        }
                     }
                 })
 
                 return( 
                     <>
-                        <ListGroupItem key={answer} className="answers">{answer} <div>Votes : {count}  ={'>'}  {count/data.length *100}%</div></ListGroupItem>
+                        <ListGroupItem key={answer} className="answers">{answer} <div>Votes : {count}  ={'>'}  {(count/data.length *100).toFixed(2)}%</div></ListGroupItem>
                         <NavDropdown.Divider />
                     </>
                 )   

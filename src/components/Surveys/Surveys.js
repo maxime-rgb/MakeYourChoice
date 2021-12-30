@@ -32,14 +32,15 @@ export default function Surveys(props){
                 return response.json()
             }
         }).then((data) => {
-            console.log(data)
+            
             setData(data)
             setIsLoading(false)
+            
         });
     }
 
     })
-    const shareUrl = ENTRYPOINT + "/SurveyDetailsForm/"+ user.id;
+
         function onDelete(survey_id){
             fetch(ENTRYPOINT + '/surveys/delete/'+ survey_id ,{
                 method:'POST',
@@ -59,9 +60,11 @@ export default function Surveys(props){
             });
         }
         function displayTable(){
+            
             if (data.length>0) {
                     return data.map((Surveys)=>{
-                        // console.log(Surveys);
+                        // console.log(Surveys);    console.log(data)
+    const shareUrl =  "http://localhost:3001/SurveyDetails/participate/"+data[0].Id;
                         return(
                          <tr>
                             <td className="id">{Surveys.Id}</td>

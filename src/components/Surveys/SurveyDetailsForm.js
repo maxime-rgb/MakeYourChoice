@@ -57,14 +57,15 @@ export default function SurveyDetailsForm(props){
     }
     function displayListGroup(){
         if (data.length>0) {
-                console.log(data[0].Date);
-                const formatYmd = date => date.toISOString().slice(0, 10);
-                // Example
-                formatYmd(new Date()); 
+            const date = Date.parse(data[0].Date);
+            const dateObject = new Date(date)
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            console.log(dateObject.toLocaleDateString('fr-FR',options));
+
                     return(  
                         <>  
                         <h1 className="h1Details">{data[0].Title}</h1>
-                        <p className="dateDetails">Created on {data[0].Date} </p>
+                        <p className="dateDetails">Created on {dateObject.toLocaleDateString('en-EN',options)} </p>
                         <h2 className="h2Details">{data[0].Question}</h2>
                         <ListGroup className="">
                         {displayAnswers()}
@@ -75,6 +76,10 @@ export default function SurveyDetailsForm(props){
             return ''
         }
     }
+    function Redirection(){
+        alert("Merci pour votre réponse !")
+        document.location.href="http://localhost:3001/";
+      }
     
     function handleSubmit(e){
         e.preventDefault()
@@ -107,10 +112,15 @@ export default function SurveyDetailsForm(props){
         <div className="containerCard">
             <div className="card">
                 <div className="envelope"></div>
-                <Form onSubmit={(e)=>{handleSubmit(e)}}>
+                <Form onSubmit={(e)=>{
+                    handleSubmit(e)
+                    Redirection()
+                    }}>
                     {displayListGroup()}
-                    <Button variant="primary" type="submit">
+                    
+                    <Button variant="primary" type="submit" >
                         Submit
+                        
                     </Button>
                 </Form>
             </div>

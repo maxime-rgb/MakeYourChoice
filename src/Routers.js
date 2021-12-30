@@ -13,7 +13,7 @@ import Surveys from "./components/Surveys/Surveys";
 import SurveyDetails from "./components/Surveys/SurveyDetails";
 import SurveyDetailsForm from './components/Surveys/SurveyDetailsForm';
 import SignUp from "./components/Users/SignUp";
-import Footer from "./components/Footer";
+import ContactUs from "./components/Contact";
 import './css/App.css';
 
 
@@ -49,12 +49,16 @@ export default function Routers() {
             <SurveyDetails User={User} setUser={setUser}/>
           </Route>
 
+          <Route path="/Contact">
+              <ContactUs User={User} setUser={setUser} />
+          </Route>
+
           <Route path="/">
             <Home User={User} setUser={setUser} />
           </Route>
 
         </Switch>
-        {/* <Footer /> */}
+
       </div>
     </Router>
   );

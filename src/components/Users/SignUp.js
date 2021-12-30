@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../../css/SignUp.css';
 import { ENTRYPOINT } from '../../Entrypoint';
-
+import React from 'react';
 
 
 function SignUp(props){
