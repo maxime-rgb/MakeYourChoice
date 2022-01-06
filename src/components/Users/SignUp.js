@@ -2,19 +2,21 @@ import { useState } from 'react';
 import '../../css/SignUp.css';
 import { ENTRYPOINT } from '../../Entrypoint';
 import React from 'react';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 function SignUp(props){
+  const history = useHistory();
 
-const[userfirstNameReg, setUserFirstNameReg] = useState('');
-const[userlastNameReg, setUserLastNameReg] = useState('');
-const[mailReg, setMailReg] = useState('');
-const[passwordReg, setPasswordReg] = useState('');
-const[mailLog, setMailLog] = useState('');
-const[passwordLog, setPasswordLog] = useState('');
+  const[userfirstNameReg, setUserFirstNameReg] = useState('');
+  const[userlastNameReg, setUserLastNameReg] = useState('');
+  const[mailReg, setMailReg] = useState('');
+  const[passwordReg, setPasswordReg] = useState('');
+  const[mailLog, setMailLog] = useState('');
+  const[passwordLog, setPasswordLog] = useState('');
 
     const register = () => {
-        console.log('response');
         fetch(ENTRYPOINT + '/users/register',{
             method:'Post',
             headers: {
@@ -30,34 +32,44 @@ const[passwordLog, setPasswordLog] = useState('');
             console.log(response);
             return response.json()
           }).then((data)=>{
-            sessionStorage.setItem('user', JSON.stringify(data));
-            props.setUser(sessionStorage.getItem('user'))
+            if (data.message) {
+              toast.error(data.message)
+            } else {
+              sessionStorage.setItem('user', JSON.stringify(data));
+              props.setUser(sessionStorage.getItem('user'))
+              toast.success('Votre compte à bien été créé ! ')
+              history.push('/')
+            }
           }) 
     };
     const login = () => {
-        console.log('response');
         fetch(ENTRYPOINT + '/users/login',{
             method:'Post',
             headers: {
               'Content-Type' : 'application/json'
             },
-             body: JSON.stringify({
-            Mail: mailLog, 
-            Password: passwordLog, 
-             })
+            body: JSON.stringify({
+              Mail: mailLog, 
+              Password: passwordLog, 
+            })
           }).then((response)=>{
             console.log(response);
             return response.json()
           }).then((data)=>{
-            console.log(data);
-            sessionStorage.setItem('user', JSON.stringify(data));
-            props.setUser(sessionStorage.getItem('user'))
-            Redirection()
-        }) 
+            if (data.message) {
+              toast.error(data.message)
+            } else {
+              
+              console.log(data);
+              sessionStorage.setItem('user', JSON.stringify(data));
+              props.setUser(sessionStorage.getItem('user'))
+              toast.success('Connexion réussie  ' + data.FirstName + ' !')
+              history.push('/')
+            }
+          }) 
     };
-    function Redirection(){
-      document.location.href="/";
-    }
+
+
 
 
     return(
@@ -73,11 +85,9 @@ const[passwordLog, setPasswordLog] = useState('');
                     
                     <label>Your Email</label>
                     <input className="InputSignIn" type="email" placeholder="xxx@xxx.com" name="email" onChange={(e) => {setMailLog(e.target.value);}}required ></input>
-
                     <label>Your Password</label>
-                    <input className="InputSignIn" type="password" minlength="3"  onChange={(e) => {setPasswordLog(e.target.value);}}placeholder="*****" name="password" required></input>
-
-                    <input className="InputSignIn" className="validate" type="submit"  value="Login" />
+                    <input className="InputSignIn" type="password" minLength="3"  onChange={(e) => {setPasswordLog(e.target.value);}}placeholder="*****" name="password" required></input>
+                    <input className="InputSignIn validate" type="submit"  value="Login" />
                 </form> 
 
                 <form className="FormSignUp" onSubmit={(e)=>{
@@ -96,9 +106,9 @@ const[passwordLog, setPasswordLog] = useState('');
                     <input className="InputSignup" type="email" onChange={(e) => {setMailReg(e.target.value);}} placeholder="xxx@xxx.com" name="email" required ></input>
 
                     <label>Your Password</label>
-                    <input className="InputSignup" type="password" onChange={(e) => {setPasswordReg(e.target.value);}} minlength="3" placeholder="*****" name="password" required></input>
+                    <input  id="password" className="InputSignup" type="password" onChange={(e) => {setPasswordReg(e.target.value);}} minlength="3" placeholder="*****" name="password" required></input>
 
-                    <input className="InputSignup" className="validate" type="submit" value="Create" />
+                    <input className="InputSignup validate" type="submit" value="Create" />
                 </form> 
             </div>
         </div>

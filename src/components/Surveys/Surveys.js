@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { EmailShareButton, FacebookShareButton, WhatsappShareButton} from "react-share";
 import { EmailIcon, FacebookMessengerIcon, WhatsappIcon, FacebookIcon } from "react-share";
 import { ENTRYPOINT } from '../../Entrypoint';
+import { toast } from 'react-toastify';
 
 
 
@@ -54,21 +55,28 @@ export default function Surveys(props){
                     return response.json()
                 }
             }).then((data) => {
-                console.log(data)
+                if (data.message) {
+                    toast.error(data.message)
+                  } else {
+                // console.log(data)
+                toast.success('Le sondage à bien été supprimé')
                 setIsLoading(true)
-           
+                  }
             });
         }
         function displayTable(){
             
             if (data.length>0) {
-                    return data.map((Surveys)=>{
+                    return data.map((Surveys, key)=>{
+                        const date = Date.parse(data[0].Date);
+                        const dateObject = new Date(date)
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         // console.log(Surveys);    console.log(data)
-    const shareUrl =  "http://localhost:3001/SurveyDetails/participate/"+data[0].Id;
+                        const shareUrl =  "http://localhost:3001/SurveyDetails/participate/"+data[0].Id;
                         return(
-                         <tr>
+                         <tr key={key}>
                             <td className="id">{Surveys.Id}</td>
-                            <td className="date">{Surveys.Date}</td>
+                            <td className="date">{dateObject.toLocaleDateString('en-EN',options)} </td>
                             <td className="question">{Surveys.Title}</td>
                             <td className="questionAccess">
                                 <Link className="navbarA" to={`/SurveyDetails/${Surveys.Id}`} >
@@ -89,12 +97,13 @@ export default function Surveys(props){
                               <WhatsappIcon size={40} round={true} />
                             </WhatsappShareButton>
                             </td>
-                            <td><button className='btn' onClick={()=>{onDelete(Surveys.Id)}}>Delete</button></td>
+                            <td><button className='btn-danger' onClick={()=>{onDelete(Surveys.Id)}}>Delete</button></td>
                         </tr>
                       )   
                     })
             }else{
-                return ''
+                console.log('ici');
+                return <tr></tr>
             }
         }             
     return (

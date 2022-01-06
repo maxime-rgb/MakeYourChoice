@@ -1,9 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from "react";
+import { ToastContainer } from 'react-toastify';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route  
 } from "react-router-dom";
 import Profil from "./components/Users/Profil";
 import Home from "./components/Home";
@@ -14,6 +15,7 @@ import SurveyDetails from "./components/Surveys/SurveyDetails";
 import SurveyDetailsForm from './components/Surveys/SurveyDetailsForm';
 import SignUp from "./components/Users/SignUp";
 import ContactUs from "./components/Contact";
+import 'react-toastify/dist/ReactToastify.css';
 import './css/App.css';
 
 
@@ -24,6 +26,7 @@ export default function Routers() {
     <Router>
       <div>
       <Header User={User} setUser={setUser}/>
+      <ToastContainer autoClose={2000} />
         <Switch>
           <Route path="/Profil">
             <Profil  User={User} setUser={setUser}/>

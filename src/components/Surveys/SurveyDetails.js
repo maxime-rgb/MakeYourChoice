@@ -25,7 +25,7 @@ export default function SurveyDetails(props){
         }).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log(data)
+            // console.log(data)
             setData(data)
             setIsLoading(false)
         });
@@ -62,12 +62,12 @@ export default function SurveyDetails(props){
                     const date = Date.parse(data[0].Date);
                     const dateObject = new Date(date)
                     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                    console.log(dateObject.toLocaleDateString('fr-FR',options));
+                    // console.log(dateObject.toLocaleDateString('fr-FR',options));
                     
                         return(  
                             <>  
                             <h1 className="h1Details">{data[0].Title}</h1>
-                            <p className="dateDetails">Created on {dateObject.toLocaleDateString('en-EN',options)} </p>
+                            <p className="dateDetails">{dateObject.toLocaleDateString('en-EN',options)} </p>
                             <h2 className="h2Details">{data[0].Question}</h2>
                             <ListGroup className="">
                                 {displayAnswers()}

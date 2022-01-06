@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import '../../css/Form.css';
 import {Form} from 'react-bootstrap';
 import { ENTRYPOINT } from '../../Entrypoint';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 
@@ -14,7 +16,7 @@ const[title, setTitleName] = useState('');
 const[question, setQuestion] = useState('');
 const[date, setDate] = useState(new Date());  
 let user = JSON.parse(props.User)
-
+  const history = useHistory();
 
     const newSurvey = () => {
         const arrayInputs = document.querySelectorAll('#answer')
@@ -38,11 +40,20 @@ let user = JSON.parse(props.User)
                 AllAnswer: JSON.stringify(inputValues), 
             })
           }).then((response)=>{
-            console.log(response);
-            return response.json()
+            if (response.message) {
+                toast.error(response.message)
+              } else {
+                return response.json()
+                
+                }
           }).then((data)=>{
-        
-            console.log(data);
+            if (data.message) {
+                toast.error(data.message)
+              } else {
+                  console.log(data);
+                toast.success('Votre sondage à bien été crée !')
+                history.push('/SurveyDetails/'+ data.insertId)
+              }
         }) 
     };
 
@@ -52,14 +63,14 @@ let user = JSON.parse(props.User)
             content: 
             <>
                 <label>Answer</label>
-                <input id="answer" type="text" placeholder="Enter an answer" name="answer" ></input>
+                <input id="answer" type="text" placeholder="Enter an answer" name="answer" required ></input>
             </>
         },
         {
             content: 
             <>
                 <label>Answer</label>
-                <input id="answer" type="text" placeholder="Enter an answer" name="answer" ></input>
+                <input id="answer" type="text" placeholder="Enter an answer" name="answer" required ></input>
             </>
         }
     ])
@@ -88,11 +99,6 @@ let user = JSON.parse(props.User)
             return item.content
         })
     }
-    function Redirection(){
-        alert("Votre sondage à bien été crée !")
-
-        document.location.href="/Surveys";
-      }
     return(
         <>
         
@@ -102,24 +108,23 @@ let user = JSON.parse(props.User)
                 <form className="FormNewSurvey" onSubmit={(e)=>{
                     e.preventDefault() 
                     newSurvey()
-                    Redirection()
-                     
-                   
                 }}  method="POST">
                             <label>Title of survey</label>
-                            <input type="text" placeholder="Enter the title of the survey" onChange={(e) => {setTitleName(e.target.value);}} name="title" ></input>
+                            <input type="text" placeholder="Enter the title of the survey" onChange={(e) => {setTitleName(e.target.value);}} name="title" required ></input>
 
                             <label>Question</label>
-                            <input type="text" placeholder="Enter your question" onChange={(e) => {setQuestion(e.target.value);}} name="question" ></input>
+                            <input type="text" placeholder="Enter your question" onChange={(e) => {setQuestion(e.target.value);}} name="question" required ></input>
 
                             <label>Date :</label>
-                            <Form.Group controlId="duedate">
+                            <Form.Group controlId="duedate" >
                                 <Form.Control
                                     type="date"
                                     name="duedate"
                                     placeholder="Due date"
                                     value={date}
                                     onChange={(e) => setDate(e.target.value)}
+                                    required
+                                   
                                 />
                             </Form.Group>
 

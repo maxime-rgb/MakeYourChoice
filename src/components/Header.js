@@ -3,21 +3,23 @@ import Navbar  from 'react-bootstrap/Navbar'
 import '../css/Navbar.css';
 import { Link } from "react-router-dom";
 import React from 'react';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 function Header(props){
-console.log(props);
+  const history = useHistory();
+  console.log(props);
   let user = JSON.parse(props.User)
   console.log(user);
 
-  function Redirection(){
-    document.location.href="/";
-  }
+
 
   function logout(){
     sessionStorage.setItem('user', null)
     props.setUser(sessionStorage.getItem('user'))
-    Redirection();
+    toast.success('Vous êtes déconnecté')
+    history.push('/')
   }
     return(
         <>
@@ -47,7 +49,7 @@ console.log(props);
                         <Link className="navbarA " to="/Surveys" style={{textDecoration:'none'}}>
                           My Surveys
                         </Link>
-                    <NavDropdown.Divider />
+                    <NavDropdown.Divider /> 
                         <Link className="navbarA " to="/PostForm" style={{textDecoration:'none'}}>
                           New Survey
                         </Link>
